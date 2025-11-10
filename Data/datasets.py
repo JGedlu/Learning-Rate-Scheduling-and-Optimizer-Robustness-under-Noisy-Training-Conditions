@@ -1,8 +1,8 @@
 import tensorflow_datasets as tfds
 import numpy as np
 
+# Loads Fashion-MNIST dataset from TensorFlow Datasets
 def load_fashion_mnist(normalize=True):
-    """Loads Fashion-MNIST dataset from TensorFlow Datasets."""
     train_ds = tfds.as_numpy(tfds.load('fashion_mnist', split='train', batch_size=-1))
     test_ds = tfds.as_numpy(tfds.load('fashion_mnist', split='test', batch_size=-1))
 
@@ -15,9 +15,8 @@ def load_fashion_mnist(normalize=True):
 
     return (x_train, y_train), (x_test, y_test)
 
-
+# Randomly replaces a percentage of labels with random ones
 def add_label_noise(y, noise_ratio, num_classes=10, seed=None):
-    """Randomly replaces a percentage of labels with random ones."""
     rng = np.random.default_rng(seed)
     y_noisy = np.copy(y)
     n_noisy = int(noise_ratio * len(y))
@@ -25,9 +24,8 @@ def add_label_noise(y, noise_ratio, num_classes=10, seed=None):
     y_noisy[idx] = rng.integers(0, num_classes, n_noisy)
     return y_noisy
 
-
+# Returns datasets with multiple noise levels
 def get_noisy_datasets(noise_levels=(0.0, 0.1, 0.2), seed=42):
-    """Returns datasets with multiple noise levels."""
     (x_train, y_train), (x_test, y_test) = load_fashion_mnist()
     datasets = {}
 
