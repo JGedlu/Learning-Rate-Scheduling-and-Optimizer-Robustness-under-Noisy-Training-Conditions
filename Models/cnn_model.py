@@ -17,9 +17,8 @@ def build_cnn(optimizer=None, input_shape=(28, 28, 1), num_classes=10):
     if optimizer is None:
         optimizer = tf.keras.optimizers.SGD(learning_rate=0.01)
 
-    # Explicit constant-LR SGD
     model.compile(
-        optimizer=tf.keras.optimizers.SGD(learning_rate=0.01),
+        optimizer=optimizer,
         loss='sparse_categorical_crossentropy',
         metrics=['accuracy']
     )
