@@ -8,9 +8,7 @@ import seaborn as sns
 
 tf.config.run_functions_eagerly(True)
 
-# ------------------------------
 # Optimizer & LR Schedule Factory
-# ------------------------------
 def get_schedulers_and_optimizers():
     return {
         'SGD_Constant': tf.keras.optimizers.SGD(learning_rate=0.01),
@@ -48,23 +46,19 @@ def get_schedulers_and_optimizers():
     }
 
 
-# ------------------------------
 # Load datasets: 0%, 10%, 20% noise
-# ------------------------------
 datasets, (x_test, y_test) = get_noisy_datasets(noise_levels=(0.0, 0.1, 0.2))
 
 x_test = x_test.reshape(-1, 28, 28, 1)
 
-# ------------------------------
 # CLEAN TRAINING (0% noise)
-# ------------------------------
 print("\n====== CLEAN DATA TRAINING (0% noise) ======\n")
 
 clean_x, clean_y = datasets[0.0]
 clean_x = clean_x.reshape(-1, 28, 28, 1)
 
 clean_results = {}
-optimizers_clean = get_schedulers_and_optimizers()  # fresh factory
+optimizers_clean = get_schedulers_and_optimizers()
 
 for name, optimizer in optimizers_clean.items():
     print(f"\n --- Training {name} on CLEAN data ---")
@@ -89,9 +83,7 @@ with open("Results/clean_results.json", "w") as f:
     json.dump(clean_results, f, indent=4)
 
 
-# ------------------------------
 # NOISY TRAINING (10% & 20%)
-# ------------------------------
 noise_results = {}
 
 for noise_level in (0.1, 0.2):
